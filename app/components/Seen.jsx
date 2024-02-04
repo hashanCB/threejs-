@@ -18,6 +18,7 @@ import {
 import React from "react";
 import { useThree } from "react-three-fiber";
 import { Model } from "./Model";
+import { MathUtils } from "three";
 
 const Seen = () => {
   const { viewport } = useThree();
@@ -29,7 +30,18 @@ const Seen = () => {
       <pointLight position={[10, 10, 10]} />
       <Sparkles count={100} size={4} scale={[width, height, 3]} />
       <Environment preset="city" />
-      <Model />
+
+      {Array.from({ length: 20 }).map((item, index) => (
+        <Model
+          key={index}
+          position={[
+            MathUtils.randFloatSpread(width),
+            MathUtils.randFloatSpread(height),
+            MathUtils.randFloat(-3, 1),
+          ]}
+          color={index % 2 == 0 ? "blue" : "yellow"}
+        />
+      ))}
 
       <Float>
         <Center position-y={1}>
